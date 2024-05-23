@@ -5,7 +5,7 @@ print('Отсутствует: ', my_dict.get('Ivan'))
 my_dict.update({'Julia':1984,
                'Din':1992})
 a=my_dict.pop('Din')
-print(a)
+print('Удаленное: ',a)
 print('Измененный словарь: ',my_dict)
 print()
 my_set={2,2,'c','c',3.5,3.5}
