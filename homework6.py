@@ -2,7 +2,7 @@ my_list = ['Russia', 'USA', 'Japan', 'China', 'Germany']
 print('List:', my_list)
 print('First country:', my_list[0])
 print('Last country:', my_list[-1])
-print('Sublist:', my_list[2:])
+print('Sublist:', my_list[2:5])
 my_list[2] = 'Italy'
 print('Modified list:', my_list)
 print()
