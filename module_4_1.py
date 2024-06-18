@@ -9,3 +9,22 @@ print(result1)
 print(result2)
 print(result3)
 print(result4)
+
+
+# функция из true_math:
+# from math import inf
+# def divide(first, second):
+#     if second == 0:
+#         return inf
+#     else:
+#         x = first / second
+#         return x
+# ________________
+# функция из fake_math:
+# def divide(first, second):
+#     if second == 0:
+#         x = 'Ошибка'
+#         return x
+#     else:
+#         x = first / second
+#         return x
