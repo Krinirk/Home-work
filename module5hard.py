@@ -1,65 +1,92 @@
+import time
+
+
 class User:
-  def __init__(self, nickname: str, password: int, age: int):
-    self.name = name
-    self.password = password
-    self.age = age
+    def __init__(self, nickname: str, password: int, age: int):
+        self.nickname = nickname
+        self.password = hash(password)
+        self.age = age
+
+    def __eq__(self, other):
+        return self.nickname == other.nickname
+
+    def __hash__(self):
+        return hash(self.password)
+
+    def __str__(self):
+        return f'{self.nickname}'
 
 
 class Video:
-  def __init__(self, title: str, duration: int, adult_mode: int):
-    self.title = title
-    self.duration = duration
-    self.adult_mode = adult_mode
-    time_now = 0
+    def __init__(self, title: str, duration: int, adult_mode=bool(False)):
+        super().__init__()
+        self.title = title
+        self.duration = duration
+        self.time_now = 0
+        self.adult_mode = adult_mode
+
+    def __eq__(self, other):
+        return self.title == other.title
+
+    def __str__(self):
+        return f'{self.title}'
+
+    def dur(self):
+        return self.duration
 
 
 class UrTube:
-  def __init__(self, users: list, videos: list, current_user: User):
-    self.users = users
-    self.videos = videos
-    self.current_user = current_user
+    def __init__(self):
 
-  
-  def log_in(self, nickname: str, password):
-    for user in self.users:
-      if user.nickname == nickname and user.password == password:
-        self.current_user = user
-        return True
-    return False
+        self.users = []
+        self.videos = []
+        self.current_user = None
 
-  
-  def register(self, nickname: str, password: int, age: int):
-    for user in self.users:
-      if user.nickname == nickname:
-        return False
-    self.users.append(User(nickname, password, age))
-    return True
-  
-  
-  def log_out(self):
-    self.current_user = None
+    def log_in(self, nickname: str, password: int):
+        for i in self.users:
+            if i.nickname == nickname and i.password == hash(password):
+                self.current_user = i
+                return self.current_user
 
-  
-  def add(self, *args):
-    if len(args) == 3:
-      self.videos.append(Video(args[0], args[1], args[2]))
-    elif len(args) == 2:
-      self.videos.append(Video(args[0], args[1], 0))
-    else:
-      self.videos.append(Video(args[0], 0, 0))
-        
+    def register(self, nickname: str, password: int, age: int):
+        Nuser = User(nickname, password, age)
+        if Nuser not in self.users:
+            self.users.append(Nuser)
+            self.log_out()
+            self.log_in(nickname, password)
+        else:
+            print(f'Пользователь {nickname} уже существует')
 
-  def get_video(self, title: str):
-    for video in self.videos:
-      if lower(video.title) == lower(title):
-        return video
-    return None
+    def log_out(self):
+        self.current_user = None
 
+    def add(self, *args):
+        for i in args:
+            if i not in self.videos:
+                self.videos.append(i)
+            else:
+                print(f'Видео с названием {i.title} уже существует')
 
-  def watch_video(self, title: str):
-    video = self.get_video(title)
-    if video is None:
-      return False
+    def get_videos(self, text):
+        listOfVideos = []
+        for i in self.videos:
+            if text.lower() in i.title.lower():
+                listOfVideos.append(str(i))
+        return listOfVideos
+
+    def watch_video(self, video):
+        if self.current_user and self.current_user.age < 18:
+            print('Вам нет 18 лет, пожалуйста покиньте страницу')
+        elif self.current_user:
+            for i in self.videos:
+                if video in i.title:
+                    dur = Video.dur(i)
+                    for k in range(1, dur + 1):
+                        print(k, end=' ')
+                        time.sleep(1)
+                    print('Конец видео')
+        else:
+            print('Войдите в аккаунт, чтобы смотреть видео')
     
       
 ur = UrTube()
