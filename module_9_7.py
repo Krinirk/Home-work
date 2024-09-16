@@ -1,11 +1,15 @@
 def is_prime(func):
     def wrapper(*args):
         result = func(*args)
-        if result % result == 0 and result != 0:
-            print("Простое")
+        k = 0
+        for i in range(2, result // 2 + 1):
+            if (result % i == 0):
+                k = k + 1
+        if (k <= 0):
+            print("Число простое")
             return result
         else:
-            print("Составное")
+            print("Число не является простым")
             return result
 
     return wrapper
